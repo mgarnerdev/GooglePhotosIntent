@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GooglePhotosIntent</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="cd_image_view">ImageView Display</string>
+    <string name="open_google_photos">Select Photo From Google Photos</string>
+</resources>
