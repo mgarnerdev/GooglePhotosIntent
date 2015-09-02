@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 	public void launchGooglePhotosPicker(Activity callingActivity) {
 		if (callingActivity != null && isGooglePhotosInstalled()) {
-			Intent intent = getPackageManager().getLaunchIntentForPackage(GOOGLE_PHOTOS_PACKAGE_NAME);
-			intent.setAction(Intent.ACTION_GET_CONTENT);
+			Intent intent = new Intent();
+			intent.setAction(Intent.ACTION_PICK);
 			intent.setType("image/*");
 			List<ResolveInfo> resolveInfoList = callingActivity.getPackageManager().queryIntentActivities(intent, 0);
 			for (int i = 0; i < resolveInfoList.size(); i++) {
