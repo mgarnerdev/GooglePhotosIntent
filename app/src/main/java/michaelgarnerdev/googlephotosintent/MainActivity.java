@@ -2,8 +2,10 @@ package michaelgarnerdev.googlephotosintent;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -74,6 +77,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			Intent intent = getPackageManager().getLaunchIntentForPackage(GOOGLE_PHOTOS_PACKAGE_NAME);
 			intent.setAction(Intent.ACTION_GET_CONTENT);
 			intent.setType("image/*");
+			List<ResolveInfo> resolveInfoList = callingActivity.getPackageManager().queryIntentActivities(intent, 0);
+			for (int i = 0; i < resolveInfoList.size(); i++) {
+				if (resolveInfoList.get(i) != null) {
+					String packageName = resolveInfoList.get(i).activityInfo.packageName;
+					if (GOOGLE_PHOTOS_PACKAGE_NAME.equals(packageName)) {
+						intent.setComponent(new ComponentName(packageName, resolveInfoList.get(i).activityInfo.name));
+						callingActivity.startActivityForResult(intent, REQUEST_PHOTO_FROM_GOOGLE_PHOTOS);
+						return;
+					}
+				}
+			}
 			try {
 				startActivityForResult(intent, REQUEST_PHOTO_FROM_GOOGLE_PHOTOS);
 			} catch (ActivityNotFoundException e) {
