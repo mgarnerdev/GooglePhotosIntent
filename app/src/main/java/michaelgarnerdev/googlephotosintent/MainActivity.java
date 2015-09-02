@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			intent.setAction(Intent.ACTION_GET_CONTENT);
 			intent.setType("image/*");
 			try {
-				//callingActivity.startActivity(intent);
 				startActivityForResult(intent, REQUEST_PHOTO_FROM_GOOGLE_PHOTOS);
 			} catch (ActivityNotFoundException e) {
 				showErrorMsgDialog("You don't have Google Photos installed! Download it from the play store today.");
